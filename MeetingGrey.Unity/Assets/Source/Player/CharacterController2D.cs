@@ -1,6 +1,7 @@
 ﻿namespace MeetingGrey.Unity.Player {
 
     using System.Collections;
+    using Assets.Source.Constants;
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
     using MeetingGrey.Unity.Depth;
@@ -8,14 +9,51 @@
     using UnityEngine;
 
     /// <summary>
+    /// Player state enumeration.
+    /// </summary>
+    public enum PlayerState {
+
+        /// <summary>
+        /// The standing state.
+        /// </summary>
+        Standing,
+
+        /// <summary>
+        /// The walking state.
+        /// </summary>
+        Walking,
+
+        /// <summary>
+        /// The jumping state.
+        /// </summary>
+        Jumping,
+
+        /// <summary>
+        /// The falling state.
+        /// </summary>
+        Falling
+    }
+
+    /// <summary>
     /// A 2D character controller.
     /// </summary>
+    [RequireComponent(typeof(Animator))]
     public class CharacterController2D : BaseBehaviour {
 
         /// <summary>
         /// The joystick dead zone.
         /// </summary>
-        private float _deadZone = 0.15f;
+        private const float DeadZone = 0.15f;
+
+        /// <summary>
+        /// The animator.
+        /// </summary>
+        private Animator _animator;
+
+        /// <summary>
+        /// The current horizontal direction.
+        /// </summary>
+        private float _currentHorizontalDirection = 0f;
 
         /// <summary>
         /// The gravity (units / second ^ 2)
@@ -30,11 +68,6 @@
         private float _height;
 
         /// <summary>
-        /// The current horizontal velocity of the player.
-        /// </summary>
-        private float _horizontalVelocity;
-
-        /// <summary>
         /// The initial velocity during a jump.
         /// </summary>
         [SerializeField]
@@ -45,6 +78,12 @@
         /// </summary>
         [SerializeField]
         private float _maxVerticalVelocity;
+
+        /// <summary>
+        /// The current player state.
+        /// </summary>
+        [SerializeField]
+        private PlayerState _playerState = PlayerState.Standing;
 
         /// <summary>
         /// The max velocity the player can reach when falling.
@@ -79,6 +118,30 @@
         private float _verticalVelocity;
 
         /// <summary>
+        /// Gets the current horizontal direction.
+        /// </summary>
+        /// <value>
+        /// The current horizontal direction.
+        /// </value>
+        public float CurrentHorizontalDirection {
+            get {
+                return this._currentHorizontalDirection;
+            }
+
+            private set {
+                if (value != 0f) {
+                    if ((this._currentHorizontalDirection > 0f && value < 0f) || (this._currentHorizontalDirection < 0f && value > 0f)) {
+                        this._animator.SetTrigger(PlayerAnimationConstants.TurnAroundTrigger);
+                    }
+
+                    this.Scale2D = new Vector2(value, 1f);
+                }
+
+                this._currentHorizontalDirection = value;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is grounded.
         /// </summary>
         /// <value>
@@ -87,6 +150,42 @@
         public bool IsGrounded {
             get {
                 return this._isGrounded;
+            }
+        }
+
+        /// <summary>
+        /// Gets the state of the player.
+        /// </summary>
+        /// <value>
+        /// The state of the player.
+        /// </value>
+        public PlayerState PlayerState {
+            get {
+                return this._playerState;
+            }
+
+            private set {
+                this._playerState = value;
+
+                switch (this._playerState) {
+                    case Player.PlayerState.Falling:
+                        this._animator.SetTrigger(PlayerAnimationConstants.FallTrigger);
+                        break;
+
+                    case Player.PlayerState.Jumping:
+                        this._animator.SetTrigger(PlayerAnimationConstants.JumpTrigger);
+                        break;
+
+                    case Player.PlayerState.Standing:
+                        this._animator.SetTrigger(PlayerAnimationConstants.StandTrigger);
+                        break;
+
+                    case Player.PlayerState.Walking:
+                        this._animator.SetTrigger(PlayerAnimationConstants.WalkTrigger);
+                        break;
+                }
+
+                Debug.Log(this._playerState);
             }
         }
 
@@ -115,6 +214,7 @@
         /// </summary>
         private void Awake() {
             this._halfHeight = this._height * 0.5f;
+            this._animator = this.GetComponent<Animator>();
         }
 
         /// <summary>
@@ -141,10 +241,13 @@
         private float GetHorizontalVelocity() {
             var x = Input.GetAxis(InputConstants.Horizontal);
 
-            if (Mathf.Abs(x) > this._deadZone) {
-                return Input.GetAxisRaw(InputConstants.Horizontal) * this._speed * Time.smoothDeltaTime;
+            if (Mathf.Abs(x) > DeadZone) {
+                var rawInput = Input.GetAxisRaw(InputConstants.Horizontal);
+                this.CurrentHorizontalDirection = rawInput;
+                return this._currentHorizontalDirection * this._speed * Time.smoothDeltaTime;
             }
 
+            this.CurrentHorizontalDirection = 0f;
             return 0f;
         }
 
@@ -154,6 +257,37 @@
         private void HandleActions() {
             if (this._isGrounded && Input.GetButtonDown(InputConstants.Jump)) {
                 this._verticalVelocity = this._jumpVelocity;
+            }
+        }
+
+        /// <summary>
+        /// Handles the animation.
+        /// </summary>
+        private void HandleAnimation() {
+            if (this._isGrounded) {
+                if (this._playerState == PlayerState.Falling || this._playerState == PlayerState.Jumping) {
+                    if (this._currentHorizontalDirection != 0f) {
+                        this.PlayerState = Player.PlayerState.Walking;
+                    } else {
+                        this.PlayerState = Player.PlayerState.Standing;
+                    }
+                } else if (this._playerState == Player.PlayerState.Walking && this._currentHorizontalDirection == 0f) {
+                    this.PlayerState = Player.PlayerState.Standing;
+                } else if (this._playerState == Player.PlayerState.Standing && this._currentHorizontalDirection != 0f) {
+                    this.PlayerState = Player.PlayerState.Walking;
+                }
+            } else {
+                if (this._playerState == Player.PlayerState.Falling && this._verticalVelocity > 0f) {
+                    this.PlayerState = Player.PlayerState.Jumping;
+                } else if (this._playerState == Player.PlayerState.Jumping && this._verticalVelocity < 0f) {
+                    this.PlayerState = Player.PlayerState.Falling;
+                } else if (this._playerState == Player.PlayerState.Standing || this._playerState == Player.PlayerState.Walking) {
+                    if (this._verticalVelocity > 0f) {
+                        this.PlayerState = Player.PlayerState.Jumping;
+                    } else {
+                        this.PlayerState = Player.PlayerState.Falling;
+                    }
+                }
             }
         }
 
@@ -195,6 +329,7 @@
         private void Update() {
             this.HandleActions();
             this.HandleMovement();
+            this.HandleAnimation();
         }
     }
 }

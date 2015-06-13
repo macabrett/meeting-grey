@@ -3,6 +3,7 @@
     using System.Collections;
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
+    using MeetingGrey.Unity.Player;
     using UnityEngine;
 
     /// <summary>
@@ -24,6 +25,11 @@
         /// The parent object of all background objects.
         /// </summary>
         private GameObject _backgroundParent;
+
+        /// <summary>
+        /// The background screen.
+        /// </summary>
+        private GameObject _backgroundScreen;
 
         /// <summary>
         /// The parent object of all foreground objects.
@@ -93,6 +99,8 @@
                 DepthController._instance = this;
             }
 
+            this._backgroundScreen = GameObject.FindGameObjectWithTag(TagConstants.BackgroundScreen);
+
             this._surfaceLayerMasks[0] = LayerConstants.SurfaceForegroundLayerMask;
             this._surfaceLayerMasks[1] = LayerConstants.SurfaceBackgroundLayerMask;
 
@@ -114,6 +122,24 @@
             for (int i = 0; i < foregroundSurfaceColliders.Length; i++) {
                 foregroundSurfaceColliders[i].gameObject.layer = LayerConstants.SurfaceForegroundLayer;
             }
+        }
+
+        /// <summary>
+        /// Screens the size changed event handler.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="BrettMStory.Unity.Camera.ScreenSizeChangedEventArgs"/> instance containing the event data.</param>
+        private void ScreenSizeChangedEventHandler(object sender, BrettMStory.Unity.Camera.ScreenSizeChangedEventArgs e) {
+            this._backgroundScreen.transform.localScale = new Vector3(e.WorldWidth, e.WorldHeight, 1f);
+        }
+
+        /// <summary>
+        /// Starts this instance.
+        /// </summary>
+        private void Start() {
+            var camera = GameObject.FindObjectOfType<Camera2D>();
+            camera.ScreenSizeChanged += this.ScreenSizeChangedEventHandler;
+            this._backgroundScreen.transform.localScale = new Vector3(camera.ScreenWorldWidth, camera.ScreenWorldHeight, 1f);
         }
 
         /// <summary>

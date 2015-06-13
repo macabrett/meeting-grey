@@ -9,6 +9,16 @@
     public static class TagConstants {
 
         /// <summary>
+        /// The background screen tag.
+        /// </summary>
+        public const string BackgroundScreen = "BackgroundScreen";
+
+        /// <summary>
+        /// The player tag.
+        /// </summary>
+        public const string Player = "Player";
+
+        /// <summary>
         /// The surface background parent tag.
         /// </summary>
         public const string SurfaceBackgroundParent = "SurfaceBackgroundParent";

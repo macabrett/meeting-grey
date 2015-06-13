@@ -5,6 +5,7 @@
     using BrettMStory.Events;
     using BrettMStory.Unity;
     using BrettMStory.Unity.Camera;
+    using MeetingGrey.Unity.Constants;
     using UnityEngine;
 
     /// <summary>
@@ -108,6 +109,30 @@
         }
 
         /// <summary>
+        /// Gets the height of the screen world.
+        /// </summary>
+        /// <value>
+        /// The height of the screen world.
+        /// </value>
+        public float ScreenWorldHeight {
+            get {
+                return this._screenWorldHeight;
+            }
+        }
+
+        /// <summary>
+        /// Gets the width of the screen world.
+        /// </summary>
+        /// <value>
+        /// The width of the screen world.
+        /// </value>
+        public float ScreenWorldWidth {
+            get {
+                return this._screenWorldWidth;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the target offset.
         /// </summary>
         public Vector2 TargetOffset {
@@ -169,6 +194,17 @@
         /// </summary>
         private void Awake() {
             this._camera = this.GetComponent<Camera>();
+
+            if (this._target == null) {
+                var targetObject = GameObject.FindGameObjectWithTag(TagConstants.Player);
+
+                if (targetObject == null) {
+                    Debug.LogError("No game object with tag 'Player' has been defined.");
+                }
+
+                this._target = targetObject.transform;
+            }
+
             this.StartCoroutine(this.CheckScreenSizeChanged());
         }
 
