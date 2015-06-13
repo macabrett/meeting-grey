@@ -184,8 +184,6 @@
                         this._animator.SetTrigger(PlayerAnimationConstants.WalkTrigger);
                         break;
                 }
-
-                Debug.Log(this._playerState);
             }
         }
 

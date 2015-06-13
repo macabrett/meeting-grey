@@ -19,7 +19,7 @@
         /// <summary>
         /// The offset of the background.
         /// </summary>
-        private Vector3 _backgroundOffset = new Vector3(-1.0f, 0.5f, 1.0f);
+        private Vector3 _backgroundOffset = new Vector3(-0.5f, 0.5f, 1.0f);
 
         /// <summary>
         /// The parent object of all background objects.
