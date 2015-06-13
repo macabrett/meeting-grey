@@ -13,9 +13,14 @@
         public const string None = "None";
 
         /// <summary>
-        /// The surface layer name.
+        /// The surface background layer name.
         /// </summary>
-        public const string Surface = "Surface";
+        public const string SurfaceBackground = "SurfaceBackground";
+
+        /// <summary>
+        /// The surface foreground layer name.
+        /// </summary>
+        public const string SurfaceForeground = "SurfaceForeground";
 
         /// <summary>
         /// Gets the none layer.
@@ -37,31 +42,55 @@
         /// </value>
         public static int NoneLayerMask {
             get {
-                return 1 << LayerMask.NameToLayer(LayerConstants.None);
+                return 1 << LayerConstants.NoneLayer;
             }
         }
 
         /// <summary>
-        /// Gets the surface layer.
+        /// Gets the surface background layer.
         /// </summary>
         /// <value>
-        /// The surface layer.
+        /// The surface background layer.
         /// </value>
-        public static int SurfaceLayer {
+        public static int SurfaceBackgroundLayer {
             get {
-                return LayerMask.NameToLayer(LayerConstants.Surface);
+                return LayerMask.NameToLayer(LayerConstants.SurfaceBackground);
             }
         }
 
         /// <summary>
-        /// Gets the surface layer mask.
+        /// Gets the surface background layer mask.
         /// </summary>
         /// <value>
-        /// The surface layer mask.
+        /// The surface background layer mask.
         /// </value>
-        public static int SurfaceLayerMask {
+        public static int SurfaceBackgroundLayerMask {
             get {
-                return 1 << LayerMask.NameToLayer(LayerConstants.Surface);
+                return 1 << LayerConstants.SurfaceBackgroundLayer;
+            }
+        }
+
+        /// <summary>
+        /// Gets the surface foreground layer.
+        /// </summary>
+        /// <value>
+        /// The surface foreground layer.
+        /// </value>
+        public static int SurfaceForegroundLayer {
+            get {
+                return LayerMask.NameToLayer(LayerConstants.SurfaceForeground);
+            }
+        }
+
+        /// <summary>
+        /// Gets the surface foreground layer mask.
+        /// </summary>
+        /// <value>
+        /// The surface foreground layer mask.
+        /// </value>
+        public static int SurfaceForegroundLayerMask {
+            get {
+                return 1 << LayerConstants.SurfaceForegroundLayer;
             }
         }
     }

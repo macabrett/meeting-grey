@@ -14,5 +14,10 @@
         /// The jump constant.
         /// </summary>
         public const string Jump = "Jump";
+
+        /// <summary>
+        /// The swap constant.
+        /// </summary>
+        public const string Swap = "Swap";
     }
 }

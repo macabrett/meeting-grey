@@ -5,6 +5,9 @@
     using MeetingGrey.Unity.Player;
     using UnityEngine;
 
+    /// <summary>
+    /// A platform that the player will bounce off of.
+    /// </summary>
     [RequireComponent(typeof(EdgeCollider2D))]
     public class BouncePad : MonoBehaviour, ISurface {
 
@@ -29,13 +32,6 @@
         /// </summary>
         public void LeaveSurface() {
             return;
-        }
-
-        /// <summary>
-        /// Awakes this instance.
-        /// </summary>
-        protected virtual void Awake() {
-            this.gameObject.layer = LayerConstants.SurfaceLayer;
         }
     }
 }

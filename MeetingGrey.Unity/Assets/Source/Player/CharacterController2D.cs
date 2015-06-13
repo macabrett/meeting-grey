@@ -3,6 +3,7 @@
     using System.Collections;
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
+    using MeetingGrey.Unity.Depth;
     using MeetingGrey.Unity.Level.Surfaces;
     using UnityEngine;
 
@@ -112,9 +113,9 @@
             // If we're grounded, we want to make sure we're on the same surface, so we go from bottom up.
             if (this._isGrounded) {
                 var start = new Vector2(this.Position2D.x, this.Position2D.y - this._halfHeight);
-                hit = Physics2D.Raycast(start, Vector2.up, this._halfHeight, LayerConstants.SurfaceLayerMask);
+                hit = Physics2D.Raycast(start, Vector2.up, this._halfHeight, DepthController.Instance.SurfaceLayerMask);
             } else {
-                hit = Physics2D.Raycast(this.Position2D, -Vector2.up, this._halfHeight, LayerConstants.SurfaceLayerMask);
+                hit = Physics2D.Raycast(this.Position2D, -Vector2.up, this._halfHeight, DepthController.Instance.SurfaceLayerMask);
             }
 
             return hit.collider != null && this._verticalVelocity <= 0f;

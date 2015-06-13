@@ -5,6 +5,9 @@
     using MeetingGrey.Unity.Player;
     using UnityEngine;
 
+    /// <summary>
+    /// A platform that the player can drop through.
+    /// </summary>
     [RequireComponent(typeof(EdgeCollider2D))]
     public class DropPlatform : MonoBehaviour, ISurface {
 
@@ -39,20 +42,14 @@
         }
 
         /// <summary>
-        /// Awakes this instance.
-        /// </summary>
-        protected virtual void Awake() {
-            this.gameObject.layer = LayerConstants.SurfaceLayer;
-        }
-
-        /// <summary>
         /// Tries the disable collider.
         /// </summary>
         /// <returns>An IEnumerator.</returns>
         private IEnumerator TryDisableCollider() {
+            var originalLayer = this.gameObject.layer;
             this.gameObject.layer = LayerConstants.NoneLayer;
             yield return new WaitForSeconds(DropPlatform.WaitTime);
-            this.gameObject.layer = LayerConstants.SurfaceLayer;
+            this.gameObject.layer = originalLayer;
         }
     }
 }
