@@ -199,15 +199,14 @@
                 x = this._target.position.x + this._maxHorizontalOffset;
             }
 
-            var y = Mathf.Lerp(this.Position2D.y, this._target.position.y + this._targetOffset.y, this._lerpAmount * Time.deltaTime);
+            var y = this._target.position.y + this._targetOffset.y;
             this.Position2D = new Vector2(x, y);
-            //this.Position2D = Vector2.Lerp(this.Position2D, new Vector2(xFollowPosition, this._target.position.y) + this._targetOffset, this._lerpAmount * Time.deltaTime);
         }
 
         /// <summary>
-        /// Updates this instance.
+        /// Late update.
         /// </summary>
-        private void Update() {
+        private void LateUpdate() {
             this.FollowTarget();
         }
     }
