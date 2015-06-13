@@ -13,6 +13,11 @@
         public const string None = "None";
 
         /// <summary>
+        /// The surface layer name.
+        /// </summary>
+        public const string Surface = "Surface";
+
+        /// <summary>
         /// The surface background layer name.
         /// </summary>
         public const string SurfaceBackground = "SurfaceBackground";
@@ -43,6 +48,30 @@
         public static int NoneLayerMask {
             get {
                 return 1 << LayerConstants.NoneLayer;
+            }
+        }
+
+        /// <summary>
+        /// Gets the surface layer.
+        /// </summary>
+        /// <value>
+        /// The surface layer.
+        /// </value>
+        public static int SurfaceLayer {
+            get {
+                return LayerMask.NameToLayer(LayerConstants.Surface);
+            }
+        }
+
+        /// <summary>
+        /// Gets the surface layer mask.
+        /// </summary>
+        /// <value>
+        /// The surface layer mask.
+        /// </value>
+        public static int SurfaceLayerMask {
+            get {
+                return 1 << LayerConstants.SurfaceLayer;
             }
         }
 

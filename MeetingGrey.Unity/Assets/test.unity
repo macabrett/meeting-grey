@@ -91,6 +91,48 @@ NavMeshSettings:
 Transform:
   m_PrefabParentObject: {fileID: 485376, guid: 913dd94da77c9b442a7489291b5a943b, type: 2}
   m_PrefabInternal: {fileID: 2119682974}
+--- !u!1001 &313161751
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 469208, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469208, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469208, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 469208, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469208, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469208, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469208, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 469208, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 7a1569ffe4eb6d1428ea3205c916b9b8, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &418234690
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +220,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .156862751, g: .325490206, b: .423529416, a: .0196078438}
+  m_BackGroundColor: {r: .823529422, g: .799475014, b: .605536342, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -398,7 +440,7 @@ Prefab:
     - target: {fileID: 21239184, guid: 724c25d89cd832049bfe4d42a9ccb450, type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a4892dea5805131479509358a9d3de95,
+      objectReference: {fileID: 21300000, guid: 40372628425400b439544d82a26b772c,
         type: 3}
     - target: {fileID: 109696, guid: 724c25d89cd832049bfe4d42a9ccb450, type: 2}
       propertyPath: m_Name
@@ -406,15 +448,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2061050, guid: 724c25d89cd832049bfe4d42a9ccb450, type: 2}
       propertyPath: m_BackGroundColor.r
-      value: .156862751
+      value: .823529422
       objectReference: {fileID: 0}
     - target: {fileID: 2061050, guid: 724c25d89cd832049bfe4d42a9ccb450, type: 2}
       propertyPath: m_BackGroundColor.g
-      value: .325490206
+      value: .799475014
       objectReference: {fileID: 0}
     - target: {fileID: 2061050, guid: 724c25d89cd832049bfe4d42a9ccb450, type: 2}
       propertyPath: m_BackGroundColor.b
-      value: .423529416
+      value: .605536342
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 724c25d89cd832049bfe4d42a9ccb450, type: 2}
@@ -478,7 +520,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 427226, guid: 6123e964be1d0ee4fbf0fcf1ca0ccdba, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 427226, guid: 6123e964be1d0ee4fbf0fcf1ca0ccdba, type: 2}
       propertyPath: m_LocalPosition.z
@@ -552,7 +594,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a4892dea5805131479509358a9d3de95, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 40372628425400b439544d82a26b772c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &2078523738
 Transform:

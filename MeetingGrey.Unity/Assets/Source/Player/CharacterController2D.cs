@@ -27,11 +27,6 @@
         /// The jumping state.
         /// </summary>
         Jumping,
-
-        /// <summary>
-        /// The falling state.
-        /// </summary>
-        Falling
     }
 
     /// <summary>
@@ -168,10 +163,6 @@
                 this._playerState = value;
 
                 switch (this._playerState) {
-                    case Player.PlayerState.Falling:
-                        this._animator.SetTrigger(PlayerAnimationConstants.FallTrigger);
-                        break;
-
                     case Player.PlayerState.Jumping:
                         this._animator.SetTrigger(PlayerAnimationConstants.JumpTrigger);
                         break;
@@ -224,9 +215,10 @@
             // If we're grounded, we want to make sure we're on the same surface, so we go from bottom up.
             if (this._isGrounded) {
                 var start = new Vector2(this.Position2D.x, this.Position2D.y - this._halfHeight);
-                hit = Physics2D.Raycast(start, Vector2.up, this._halfHeight, DepthController.Instance.SurfaceLayerMask);
+                hit = Physics2D.Raycast(start, Vector2.up, this._halfHeight, DepthController.Instance.SurfaceLayerMask | LayerConstants.SurfaceLayerMask);
             } else {
-                hit = Physics2D.Raycast(this.Position2D, -Vector2.up, this._halfHeight, DepthController.Instance.SurfaceLayerMask);
+                var quarterHeight = this._halfHeight * 0.5f;
+                hit = Physics2D.Raycast(this.Position2D - quarterHeight * Vector2.up, -Vector2.up, quarterHeight, DepthController.Instance.SurfaceLayerMask | LayerConstants.SurfaceLayerMask);
             }
 
             return hit.collider != null && this._verticalVelocity <= 0f;
@@ -263,7 +255,7 @@
         /// </summary>
         private void HandleAnimation() {
             if (this._isGrounded) {
-                if (this._playerState == PlayerState.Falling || this._playerState == PlayerState.Jumping) {
+                if (this._playerState == PlayerState.Jumping) {
                     if (this._currentHorizontalDirection != 0f) {
                         this.PlayerState = Player.PlayerState.Walking;
                     } else {
@@ -274,18 +266,8 @@
                 } else if (this._playerState == Player.PlayerState.Standing && this._currentHorizontalDirection != 0f) {
                     this.PlayerState = Player.PlayerState.Walking;
                 }
-            } else {
-                if (this._playerState == Player.PlayerState.Falling && this._verticalVelocity > 0f) {
-                    this.PlayerState = Player.PlayerState.Jumping;
-                } else if (this._playerState == Player.PlayerState.Jumping && this._verticalVelocity < 0f) {
-                    this.PlayerState = Player.PlayerState.Falling;
-                } else if (this._playerState == Player.PlayerState.Standing || this._playerState == Player.PlayerState.Walking) {
-                    if (this._verticalVelocity > 0f) {
-                        this.PlayerState = Player.PlayerState.Jumping;
-                    } else {
-                        this.PlayerState = Player.PlayerState.Falling;
-                    }
-                }
+            } else if (this._playerState == Player.PlayerState.Standing || this._playerState == Player.PlayerState.Walking) {
+                this.PlayerState = Player.PlayerState.Jumping;
             }
         }
 
