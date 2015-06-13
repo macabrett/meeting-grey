@@ -30,6 +30,11 @@
         private float _height;
 
         /// <summary>
+        /// The current horizontal velocity of the player.
+        /// </summary>
+        private float _horizontalVelocity;
+
+        /// <summary>
         /// The initial velocity during a jump.
         /// </summary>
         [SerializeField]
@@ -40,12 +45,6 @@
         /// </summary>
         [SerializeField]
         private float _maxVerticalVelocity;
-
-        /// <summary>
-        /// The speed of the character.
-        /// </summary>
-        [SerializeField]
-        private float _speed;
 
         /// <summary>
         /// The max velocity the player can reach when falling.
@@ -62,6 +61,12 @@
         /// A value indicating whether or not the player is on the ground.
         /// </summary>
         private bool _isGrounded;
+
+        /// <summary>
+        /// The speed of the character.
+        /// </summary>
+        [SerializeField]
+        private float _speed;
 
         /// <summary>
         /// The current surface beneath the player.
@@ -94,6 +99,14 @@
         public float VerticalVelocity {
             get {
                 return this._verticalVelocity;
+            }
+
+            private set {
+                if (value < this._terminalVelocity) {
+                    this._verticalVelocity = this._terminalVelocity;
+                } else {
+                    this._verticalVelocity = value;
+                }
             }
         }
 
@@ -129,7 +142,7 @@
             var x = Input.GetAxis(InputConstants.Horizontal);
 
             if (Mathf.Abs(x) > this._deadZone) {
-                return Input.GetAxisRaw(InputConstants.Horizontal) * this._speed * Time.deltaTime;
+                return Input.GetAxisRaw(InputConstants.Horizontal) * this._speed * Time.smoothDeltaTime;
             }
 
             return 0f;
@@ -148,9 +161,9 @@
         /// Handles the movement.
         /// </summary>
         private void HandleMovement() {
-            var velocity = new Vector2(this.GetHorizontalVelocity(), this._verticalVelocity * Time.deltaTime);
+            var velocity = new Vector2(this.GetHorizontalVelocity(), this._verticalVelocity * Time.smoothDeltaTime);
             this.Transform.Translate(velocity);
-            this._verticalVelocity -= this._gravity * Time.deltaTime;
+            this.VerticalVelocity -= this._gravity * Time.smoothDeltaTime;
 
             RaycastHit2D hit;
 
