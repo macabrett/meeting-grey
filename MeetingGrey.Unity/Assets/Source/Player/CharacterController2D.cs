@@ -138,7 +138,7 @@
         /// Handles the actions.
         /// </summary>
         private void HandleActions() {
-            if (Input.GetButtonDown(InputConstants.Jump)) {
+            if (this._isGrounded && Input.GetButtonDown(InputConstants.Jump)) {
                 this._verticalVelocity = this._jumpVelocity;
             }
         }
