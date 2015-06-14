@@ -28,6 +28,11 @@
         public const string SurfaceForeground = "SurfaceForeground";
 
         /// <summary>
+        /// The touchable layer name.
+        /// </summary>
+        public const string Touchable = "Touchable";
+
+        /// <summary>
         /// Gets the none layer.
         /// </summary>
         /// <value>
@@ -120,6 +125,30 @@
         public static int SurfaceForegroundLayerMask {
             get {
                 return 1 << LayerConstants.SurfaceForegroundLayer;
+            }
+        }
+
+        /// <summary>
+        /// Gets the touchable layer.
+        /// </summary>
+        /// <value>
+        /// The touchable layer.
+        /// </value>
+        public static int TouchableLayer {
+            get {
+                return LayerMask.NameToLayer(LayerConstants.Touchable);
+            }
+        }
+
+        /// <summary>
+        /// Gets the touchable layer mask.
+        /// </summary>
+        /// <value>
+        /// The touchable layer mask.
+        /// </value>
+        public static int TouchableLayerMask {
+            get {
+                return 1 << LayerConstants.TouchableLayer;
             }
         }
     }

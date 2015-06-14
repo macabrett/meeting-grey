@@ -50,7 +50,7 @@
         public static DepthController Instance {
             get {
                 if (DepthController._instance == null) {
-                    var depthController = GameObject.Instantiate(new GameObject("DepthController"));
+                    var depthController = new GameObject("DepthController");
                     DepthController._instance = depthController.AddComponent<DepthController>();
                 }
 

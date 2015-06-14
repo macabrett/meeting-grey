@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 8f7b4af2bb1286e47bf7cb8270e9b5dd
-timeCreated: 1434231470
+guid: 37846f1383a46d149b350ef82e776f6b
+timeCreated: 1434259597
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Left
-    21300002: Middle
-    21300004: Right
+    21300000: PauseMenu_0
+    21300002: PauseMenu_1
+    21300004: PauseMenu_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -52,35 +52,35 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Left
+    - name: PauseMenu_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: PauseMenu_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: PauseMenu_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 64
+        height: 32
       alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Middle
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Right
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

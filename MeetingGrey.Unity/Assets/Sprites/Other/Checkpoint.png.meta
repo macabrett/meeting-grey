@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: 8f7b4af2bb1286e47bf7cb8270e9b5dd
-timeCreated: 1434231470
+guid: 7caffbc906b6f784d84ff3ddac2bf947
+timeCreated: 1434250704
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Left
-    21300002: Middle
-    21300004: Right
+    21300000: InactiveCheckpoint
+    21300002: ActiveCheckpoint
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -52,30 +51,20 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Left
+    - name: InactiveCheckpoint
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 16
         width: 16
         height: 16
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Middle
+    - name: ActiveCheckpoint
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Right
-      rect:
-        serializedVersion: 2
-        x: 32
+        x: 0
         y: 0
         width: 16
         height: 16

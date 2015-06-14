@@ -16,8 +16,18 @@
         public const string Jump = "Jump";
 
         /// <summary>
+        /// The pause constant.
+        /// </summary>
+        public const string Pause = "Pause";
+
+        /// <summary>
         /// The swap constant.
         /// </summary>
         public const string Swap = "Swap";
+
+        /// <summary>
+        /// The vertical constant.
+        /// </summary>
+        public const string Vertical = "Vertical";
     }
 }

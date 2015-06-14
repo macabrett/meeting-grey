@@ -6,6 +6,7 @@
     using BrettMStory.Unity;
     using BrettMStory.Unity.Camera;
     using MeetingGrey.Unity.Constants;
+    using MeetingGrey.Unity.Levels;
     using UnityEngine;
 
     /// <summary>
@@ -18,6 +19,11 @@
         /// The camera.
         /// </summary>
         private Camera _camera;
+
+        /// <summary>
+        /// The death line.
+        /// </summary>
+        private DeathLine _deathLine;
 
         /// <summary>
         /// Half of the world height.
@@ -183,6 +189,8 @@
             this._screenWorldHeight = this._camera.ScreenToWorldPoint(new Vector2(0f, Screen.height)).y - this._camera.ScreenToWorldPoint(Vector2.zero).y;
             this._halfWorldHeight = this._screenWorldHeight / 2f;
 
+            this.Position2D = new Vector2(this._target.position.x, this._deathLine.transform.position.y + this._halfWorldHeight);
+
             this.ScreenSizeChanged.SafeInvoke(this, new ScreenSizeChangedEventArgs {
                 WorldHeight = this._screenWorldHeight,
                 WorldWidth = this._screenWorldWidth
@@ -194,6 +202,8 @@
         /// </summary>
         private void Awake() {
             this._camera = this.GetComponent<Camera>();
+
+            this._deathLine = GameObject.FindObjectOfType<DeathLine>();
 
             if (this._target == null) {
                 var targetObject = GameObject.FindGameObjectWithTag(TagConstants.Player);
@@ -235,8 +245,7 @@
                 x = this._target.position.x + this._maxHorizontalOffset;
             }
 
-            var y = this._target.position.y + this._targetOffset.y;
-            this.Position2D = new Vector2(x, y);
+            this.Position2D = new Vector2(x, this.Position2D.y);
         }
 
         /// <summary>
@@ -244,6 +253,22 @@
         /// </summary>
         private void LateUpdate() {
             this.FollowTarget();
+        }
+
+        /// <summary>
+        /// Respawneds the event handler.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RespawnEventArgs"/> instance containing the event data.</param>
+        private void RespawnedEventHandler(object sender, RespawnEventArgs e) {
+            this.Position2D = new Vector2(e.RespawnPosition.x, this.Position2D.y);
+        }
+
+        /// <summary>
+        /// Starts this instance.
+        /// </summary>
+        private void Start() {
+            Level.Instance.Respawned += this.RespawnedEventHandler;
         }
     }
 }

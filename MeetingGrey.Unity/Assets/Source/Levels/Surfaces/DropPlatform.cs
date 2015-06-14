@@ -1,4 +1,4 @@
-﻿namespace MeetingGrey.Unity.Level.Surfaces {
+﻿namespace MeetingGrey.Unity.Levels.Surfaces {
 
     using System.Collections;
     using MeetingGrey.Unity.Constants;

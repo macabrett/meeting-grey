@@ -14,6 +14,11 @@
         public const string BackgroundScreen = "BackgroundScreen";
 
         /// <summary>
+        /// The death line tag.
+        /// </summary>
+        public const string DeathLine = "DeathLine";
+
+        /// <summary>
         /// The player tag.
         /// </summary>
         public const string Player = "Player";

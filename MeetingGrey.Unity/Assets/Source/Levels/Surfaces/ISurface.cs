@@ -1,4 +1,4 @@
-﻿namespace MeetingGrey.Unity.Level.Surfaces {
+﻿namespace MeetingGrey.Unity.Levels.Surfaces {
 
     using MeetingGrey.Unity.Player;
 

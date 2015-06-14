@@ -1,4 +1,4 @@
-﻿namespace MeetingGrey.Unity.Level.Surfaces {
+﻿namespace MeetingGrey.Unity.Levels.Surfaces {
 
     using System.Collections;
     using BrettMStory.Unity;
@@ -16,6 +16,11 @@
         /// The animation time.
         /// </summary>
         private const float AnimationTime = 0.25f;
+
+        /// <summary>
+        /// The jump boost.
+        /// </summary>
+        private const float JumpBoost = 1f;
 
         /// <summary>
         /// The bouncing sprite.
@@ -48,7 +53,13 @@
         /// <returns></returns>
         public float Land(CharacterController2D player) {
             this.StartCoroutine(this.PlayBounceAnimation());
-            return Mathf.Abs(player.VerticalVelocity);
+            var verticalVelocity = Mathf.Abs(player.VerticalVelocity);
+
+            if (Input.GetButton(InputConstants.Jump)) {
+                verticalVelocity += BouncePad.JumpBoost;
+            }
+
+            return verticalVelocity;
         }
 
         /// <summary>

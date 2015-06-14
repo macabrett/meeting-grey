@@ -1,4 +1,4 @@
-﻿namespace MeetingGrey.Unity.Level.Builders {
+﻿namespace MeetingGrey.Unity.Levels.Builders {
 
     using System.Collections;
     using System.Collections.Generic;
@@ -126,7 +126,7 @@
                     sprite = this._bottomRight;
                 }
 
-                var spriteGameObject = GameObject.Instantiate(new GameObject(string.Format("Bottom {0}", sprite.name)));
+                var spriteGameObject = new GameObject(string.Format("Bottom {0}", sprite.name));
                 var spriteRenderer = spriteGameObject.AddComponent<SpriteRenderer>();
                 spriteRenderer.sprite = sprite;
                 spriteGameObject.transform.position = new Vector2(startPosition.x + i, startPosition.y);
@@ -148,7 +148,7 @@
                     sprite = this._middleRight;
                 }
 
-                var spriteGameObject = GameObject.Instantiate(new GameObject(string.Format("Middle {0}", sprite.name)));
+                var spriteGameObject = new GameObject(string.Format("Middle {0}", sprite.name));
                 var spriteRenderer = spriteGameObject.AddComponent<SpriteRenderer>();
                 spriteRenderer.sprite = sprite;
                 spriteGameObject.transform.position = new Vector2(startPosition.x + i, startPosition.y);
@@ -170,7 +170,7 @@
                     sprite = this._topRight;
                 }
 
-                var spriteGameObject = GameObject.Instantiate(new GameObject(string.Format("Top {0}", sprite.name)));
+                var spriteGameObject = new GameObject(string.Format("Top {0}", sprite.name));
                 var spriteRenderer = spriteGameObject.AddComponent<SpriteRenderer>();
                 spriteRenderer.sprite = sprite;
                 spriteGameObject.transform.position = new Vector2(startPosition.x + i, startPosition.y);
@@ -181,7 +181,7 @@
         /// <summary>
         /// Called when [draw gizmos].
         /// </summary>
-        protected void OnDrawGizmos() {
+        private void OnDrawGizmos() {
             var cubePosition = new Vector3(this.transform.position.x + this._width * 0.5f, this.transform.position.y + this._height * 0.5f, this.transform.position.z);
             Gizmos.color = this._debugColor;
             Gizmos.DrawCube(cubePosition, new Vector3(this._width, this._height, 1f));

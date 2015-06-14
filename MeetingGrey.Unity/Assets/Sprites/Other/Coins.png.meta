@@ -1,12 +1,14 @@
 fileFormatVersion: 2
-guid: 8f7b4af2bb1286e47bf7cb8270e9b5dd
-timeCreated: 1434231470
+guid: 001342b89be998645950e4b34b02000e
+timeCreated: 1434234018
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Left
-    21300002: Middle
-    21300004: Right
+    21300000: Coins_00
+    21300002: Coins_01
+    21300004: Coins_02
+    21300006: Coins_03
+    21300008: SingleCoin
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -52,32 +54,52 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Left
+    - name: Coins_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Coins_01
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Coins_02
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Coins_03
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
+        width: 24
         height: 16
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Middle
+    - name: SingleCoin
       rect:
         serializedVersion: 2
         x: 16
         y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Right
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
+        width: 8
         height: 16
       alignment: 0
       pivot: {x: .5, y: .5}

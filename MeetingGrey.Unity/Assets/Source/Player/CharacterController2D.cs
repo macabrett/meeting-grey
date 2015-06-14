@@ -1,11 +1,15 @@
 ﻿namespace MeetingGrey.Unity.Player {
 
+    using System;
     using System.Collections;
     using Assets.Source.Constants;
+    using BrettMStory.Events;
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
     using MeetingGrey.Unity.Depth;
-    using MeetingGrey.Unity.Level.Surfaces;
+    using MeetingGrey.Unity.Levels;
+    using MeetingGrey.Unity.Levels.Surfaces;
+    using MeetingGrey.Unity.Levels.Touchables;
     using UnityEngine;
 
     /// <summary>
@@ -41,6 +45,11 @@
         private const float DeadZone = 0.15f;
 
         /// <summary>
+        /// The singleton instance;
+        /// </summary>
+        private static CharacterController2D _instance;
+
+        /// <summary>
         /// The animator.
         /// </summary>
         private Animator _animator;
@@ -57,10 +66,20 @@
         private float _gravity;
 
         /// <summary>
+        /// Half the height of the player. Only here to reduce update calculations.
+        /// </summary>
+        private float _halfHeight;
+
+        /// <summary>
         /// The height of the player.
         /// </summary>
         [SerializeField]
         private float _height;
+
+        /// <summary>
+        /// A value indicating whether or not the player is on the ground.
+        /// </summary>
+        private bool _isGrounded;
 
         /// <summary>
         /// The initial velocity during a jump.
@@ -77,24 +96,12 @@
         /// <summary>
         /// The current player state.
         /// </summary>
-        [SerializeField]
         private PlayerState _playerState = PlayerState.Standing;
 
         /// <summary>
-        /// The max velocity the player can reach when falling.
+        /// The quarter height.
         /// </summary>
-        [SerializeField]
-        private float _terminalVelocity;
-
-        /// <summary>
-        /// Half the height of the player. Only here to reduce update calculations.
-        /// </summary>
-        private float _halfHeight;
-
-        /// <summary>
-        /// A value indicating whether or not the player is on the ground.
-        /// </summary>
-        private bool _isGrounded;
+        private float _quarterHeight;
 
         /// <summary>
         /// The speed of the character.
@@ -108,9 +115,32 @@
         private ISurface _surfaceBelow;
 
         /// <summary>
+        /// The max velocity the player can reach when falling.
+        /// </summary>
+        [SerializeField]
+        private float _terminalVelocity;
+
+        /// <summary>
         /// The current vertical velocity of the player.
         /// </summary>
         private float _verticalVelocity;
+
+        /// <summary>
+        /// Occurs when [player died].
+        /// </summary>
+        public event EventHandler PlayerDied;
+
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        /// <value>
+        /// The instance.
+        /// </value>
+        public static CharacterController2D Instance {
+            get {
+                return CharacterController2D._instance;
+            }
+        }
 
         /// <summary>
         /// Gets the current horizontal direction.
@@ -125,10 +155,6 @@
 
             private set {
                 if (value != 0f) {
-                    if ((this._currentHorizontalDirection > 0f && value < 0f) || (this._currentHorizontalDirection < 0f && value > 0f)) {
-                        this._animator.SetTrigger(PlayerAnimationConstants.TurnAroundTrigger);
-                    }
-
                     this.Scale2D = new Vector2(value, 1f);
                 }
 
@@ -202,8 +228,21 @@
         /// Awakes this instance.
         /// </summary>
         private void Awake() {
+            CharacterController2D._instance = this;
             this._halfHeight = this._height * 0.5f;
+            this._quarterHeight = this._height * 0.25f;
             this._animator = this.GetComponent<Animator>();
+        }
+
+        /// <summary>
+        /// Checks if dead.
+        /// </summary>
+        private void CheckIfDead() {
+            if (this.Position2D.y < DeathLine.Instance.Position2D.y - 5f) {
+                this.PlayerDied.SafeInvoke(this);
+                this.VerticalVelocity = 0f;
+                this.CurrentHorizontalDirection = 0f;
+            }
         }
 
         /// <summary>
@@ -217,8 +256,7 @@
                 var start = new Vector2(this.Position2D.x, this.Position2D.y - this._halfHeight);
                 hit = Physics2D.Raycast(start, Vector2.up, this._halfHeight, DepthController.Instance.SurfaceLayerMask | LayerConstants.SurfaceLayerMask);
             } else {
-                var quarterHeight = this._halfHeight * 0.5f;
-                hit = Physics2D.Raycast(this.Position2D - quarterHeight * Vector2.up, -Vector2.up, quarterHeight, DepthController.Instance.SurfaceLayerMask | LayerConstants.SurfaceLayerMask);
+                hit = Physics2D.Raycast(this.Position2D - this._quarterHeight * Vector2.up, -Vector2.up, this._quarterHeight, DepthController.Instance.SurfaceLayerMask | LayerConstants.SurfaceLayerMask);
             }
 
             return hit.collider != null && this._verticalVelocity <= 0f;
@@ -247,6 +285,10 @@
         private void HandleActions() {
             if (this._isGrounded && Input.GetButtonDown(InputConstants.Jump)) {
                 this._verticalVelocity = this._jumpVelocity;
+            }
+
+            if (this._isGrounded && this._surfaceBelow != null && Input.GetAxisRaw(InputConstants.Vertical) < 0f) {
+                this._surfaceBelow.Drop();
             }
         }
 
@@ -304,12 +346,51 @@
         }
 
         /// <summary>
+        /// Handles the touch.
+        /// </summary>
+        private void HandleTouch() {
+            var colliders = Physics2D.OverlapCircleAll(this.Position2D, this._quarterHeight, LayerConstants.TouchableLayerMask);
+
+            for (int i = 0; i < colliders.Length; i++) {
+                var touchable = (ITouchable)colliders[i].GetComponent(typeof(ITouchable));
+
+                if (touchable == null) {
+                    continue;
+                }
+
+                touchable.Touch(this);
+            }
+        }
+
+        /// <summary>
+        /// Respawneds the event handler.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RespawnEventArgs"/> instance containing the event data.</param>
+        private void RespawnedEventHandler(object sender, RespawnEventArgs e) {
+            this.Position2D = e.RespawnPosition;
+        }
+
+        /// <summary>
+        /// Starts this instance.
+        /// </summary>
+        private void Start() {
+            Level.Instance.Respawned += this.RespawnedEventHandler;
+        }
+
+        /// <summary>
         /// Updates this instance.
         /// </summary>
         private void Update() {
+            if (Level.Instance.IsPlayerDead || Level.Instance.IsPaused) {
+                return;
+            }
+
             this.HandleActions();
             this.HandleMovement();
+            this.HandleTouch();
             this.HandleAnimation();
+            this.CheckIfDead();
         }
     }
 }
