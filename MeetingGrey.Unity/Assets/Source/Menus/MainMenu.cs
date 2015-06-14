@@ -109,7 +109,15 @@
         /// </summary>
         private void Update() {
             if (Mathf.Abs(Input.GetAxis(InputConstants.Vertical)) > 0.15f) {
-                var rawInput = Input.GetAxisRaw(InputConstants.Vertical) > 0f ? 1f : -1f;
+                var rawInput = Input.GetAxisRaw(InputConstants.Vertical);
+
+                if (rawInput > 0f) {
+                    rawInput = 1f;
+                } else if (rawInput < 0f) {
+                    rawInput = -1f;
+                } else {
+                    rawInput = 0f;
+                }
 
                 if (rawInput < 0f && rawInput != this._lastFrameVerticalInput) {
                     this.Iterator++;
