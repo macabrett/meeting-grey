@@ -86,9 +86,9 @@
         /// Called when [draw gizmos].
         /// </summary>
         protected void OnDrawGizmos() {
-            var cubePosition = new Vector3(this.transform.position.x + this._effectiveWidth * 0.5f, this.transform.position.y + Platform.Height * 0.5f, this.transform.position.z);
+            var cubePosition = new Vector3(this.transform.position.x + (this._width - 0.25f) * 0.5f, this.transform.position.y + Platform.Height * 0.5f, this.transform.position.z);
             Gizmos.color = this._debugColor;
-            Gizmos.DrawCube(cubePosition, new Vector3(this._effectiveWidth, Platform.Height, 1f));
+            Gizmos.DrawCube(cubePosition, new Vector3((this._width - 0.25f), Platform.Height, 1f));
         }
 
         /// <summary>

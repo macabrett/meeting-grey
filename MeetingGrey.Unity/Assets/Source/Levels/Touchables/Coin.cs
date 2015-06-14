@@ -5,6 +5,7 @@
     using MeetingGrey.Unity.Constants;
     using MeetingGrey.Unity.Levels.Touchables;
     using MeetingGrey.Unity.Player;
+    using MeetingGrey.Unity.Wrappers;
     using UnityEngine;
 
     /// <summary>
@@ -22,6 +23,7 @@
                 this.IsBusy = true;
                 Level.Instance.CoinsGathered++;
                 this.GameObject.SetActive(false);
+                AudioWrapper.PlayCoinClip(this.Position2D);
             }
         }
 

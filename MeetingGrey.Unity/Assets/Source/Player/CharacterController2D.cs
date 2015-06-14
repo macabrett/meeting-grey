@@ -10,6 +10,7 @@
     using MeetingGrey.Unity.Levels;
     using MeetingGrey.Unity.Levels.Surfaces;
     using MeetingGrey.Unity.Levels.Touchables;
+    using MeetingGrey.Unity.Wrappers;
     using UnityEngine;
 
     /// <summary>
@@ -284,7 +285,10 @@
         /// </summary>
         private void HandleActions() {
             if (this._isGrounded && Input.GetButtonDown(InputConstants.Jump)) {
-                this._verticalVelocity = this._jumpVelocity;
+                if (this._surfaceBelow == null || (this._surfaceBelow) as BouncePad == null) {
+                    this._verticalVelocity = this._jumpVelocity;
+                    AudioWrapper.PlayJumpClip(this.Position2D);
+                }
             }
 
             if (this._isGrounded && this._surfaceBelow != null && Input.GetAxisRaw(InputConstants.Vertical) < 0f) {

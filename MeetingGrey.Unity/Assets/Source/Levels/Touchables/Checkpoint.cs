@@ -4,6 +4,7 @@
     using MeetingGrey.Unity.Constants;
     using MeetingGrey.Unity.Levels.Touchables;
     using MeetingGrey.Unity.Player;
+    using MeetingGrey.Unity.Wrappers;
     using UnityEngine;
 
     /// <summary>
@@ -53,6 +54,7 @@
                 this.IsBusy = true;
                 if (Level.Instance.RegisterCheckpoint(this._sequenceNumber, this.Position2D + Vector2.up)) {
                     this._spriteRenderer.sprite = this._activeSprite;
+                    AudioWrapper.PlayCheckpointClip(this.Position2D);
                     return;
                 }
 

@@ -51,6 +51,12 @@
         private int _level;
 
         /// <summary>
+        /// The messages.
+        /// </summary>
+        [SerializeField]
+        private GameObject _messages;
+
+        /// <summary>
         /// The pause menu.
         /// </summary>
         [SerializeField]
@@ -163,6 +169,7 @@
         public void Unpause() {
             this._isPaused = false;
             this._pauseMenu.SetActive(false);
+            this._messages.SetActive(true);
         }
 
         /// <summary>
@@ -170,6 +177,11 @@
         /// </summary>
         private void Awake() {
             Level._instance = this;
+
+            if (this._messages == null) {
+                this._messages = new GameObject("fake messages");
+            }
+
             PlayerPrefsWrapper.LastLevelPlayed = this._level;
         }
 
@@ -181,6 +193,7 @@
         private void PlayerDiedEventHandler(object sender, EventArgs e) {
             this._isPlayerDead = true;
             this._deathMessage.SetActive(true);
+            this._messages.SetActive(false);
         }
 
         /// <summary>
@@ -190,6 +203,7 @@
             this.Respawned.SafeInvoke(this, new RespawnEventArgs(this._checkpointSequence, this._respawnPoint));
             this._isPlayerDead = false;
             this._deathMessage.SetActive(false);
+            this._messages.SetActive(true);
         }
 
         /// <summary>
@@ -209,6 +223,7 @@
             } else if (!this._isPlayerDead && Input.GetButtonDown(InputConstants.Pause)) {
                 this._isPaused = true;
                 this._pauseMenu.SetActive(true);
+                this._messages.SetActive(false);
             }
         }
     }
