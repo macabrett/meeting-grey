@@ -29,6 +29,12 @@
         private int _coinsGathered = 0;
 
         /// <summary>
+        /// The coin progress.
+        /// </summary>
+        [SerializeField]
+        private CoinProgressThing _coinProgress;
+
+        /// <summary>
         /// The death message.
         /// </summary>
         [SerializeField]
@@ -170,6 +176,7 @@
             this._isPaused = false;
             this._pauseMenu.SetActive(false);
             this._messages.SetActive(true);
+            AudioWrapper.StartMusic();
         }
 
         /// <summary>
@@ -228,6 +235,7 @@
                 this._isPaused = true;
                 this._pauseMenu.SetActive(true);
                 this._messages.SetActive(false);
+                AudioWrapper.StopMusic();
             }
         }
     }

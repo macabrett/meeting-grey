@@ -38,9 +38,19 @@
         private const string MenuPath = "Sound/Menu";
 
         /// <summary>
+        /// The music path.
+        /// </summary>
+        private const string MusicPath = "Sound/Theme";
+
+        /// <summary>
         /// The swap path.
         /// </summary>
         private const string SwapPath = "Sound/Swap";
+
+        /// <summary>
+        /// The audio source for music.
+        /// </summary>
+        private static AudioSource _audioSourceMusic;
 
         /// <summary>
         /// The bounce audio clip.
@@ -71,6 +81,16 @@
         /// The menu audio clip.
         /// </summary>
         private static AudioClip _menu;
+
+        /// <summary>
+        /// The music audio clip.
+        /// </summary>
+        private static AudioClip _music;
+
+        /// <summary>
+        /// The pause time of the music.
+        /// </summary>
+        private static float _pauseTime = 0f;
 
         /// <summary>
         /// The swap audio clip.
@@ -150,6 +170,18 @@
         }
 
         /// <summary>
+        /// Gets the music audio clip.
+        /// </summary>
+        /// <value>
+        /// The music audio clip.
+        /// </value>
+        private static AudioClip Music {
+            get {
+                return AudioWrapper._music ?? (AudioWrapper._music = Resources.Load<AudioClip>(AudioWrapper.MusicPath));
+            }
+        }
+
+        /// <summary>
         /// Gets the swap audio clip.
         /// </summary>
         /// <value>
@@ -173,14 +205,14 @@
         /// Plays the checkpoint clip.
         /// </summary>
         public static void PlayCheckpointClip(Vector2 position) {
-            AudioSource.PlayClipAtPoint(AudioWrapper.Checkpoint, position, 1f);
+            AudioSource.PlayClipAtPoint(AudioWrapper.Checkpoint, position, 0.75f);
         }
 
         /// <summary>
         /// Plays the coin clip.
         /// </summary>
         public static void PlayCoinClip(Vector2 position) {
-            AudioSource.PlayClipAtPoint(AudioWrapper.Coin, position, 1f);
+            AudioSource.PlayClipAtPoint(AudioWrapper.Coin, position, 0.75f);
         }
 
         /// <summary>
@@ -188,7 +220,7 @@
         /// </summary>
         /// <param name="position">The position.</param>
         public static void PlayDeathClip(Vector2 position) {
-            AudioSource.PlayClipAtPoint(AudioWrapper.Death, position, 1f);
+            AudioSource.PlayClipAtPoint(AudioWrapper.Death, position, 0.8f);
         }
 
         /// <summary>
@@ -214,10 +246,29 @@
             AudioSource.PlayClipAtPoint(AudioWrapper.Swap, position, 1f);
         }
 
+        /// <summary>
+        /// Starts the music.
+        /// </summary>
         public static void StartMusic() {
+            if (AudioWrapper._audioSourceMusic == null) {
+                var audioGameObject = new GameObject("Music");
+                AudioWrapper._audioSourceMusic = audioGameObject.AddComponent<AudioSource>();
+                AudioWrapper._audioSourceMusic.loop = true;
+                AudioWrapper._audioSourceMusic.clip = AudioWrapper.Music;
+                AudioWrapper._audioSourceMusic.playOnAwake = false;
+                AudioWrapper._audioSourceMusic.volume = 0.5f;
+            }
+
+            AudioWrapper._audioSourceMusic.Play();
+            AudioWrapper._audioSourceMusic.time = AudioWrapper._pauseTime;
         }
 
+        /// <summary>
+        /// Stops the music.
+        /// </summary>
         public static void StopMusic() {
+            AudioWrapper._pauseTime = AudioWrapper._audioSourceMusic.time;
+            AudioWrapper._audioSourceMusic.Stop();
         }
     }
 }

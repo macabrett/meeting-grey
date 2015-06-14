@@ -32,7 +32,7 @@
         /// </summary>
         private void OnDrawGizmos() {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(this.transform.position, this.transform.position + Vector3.right * 1000f);
+            Gizmos.DrawLine(this.transform.position, this.transform.position + Vector3.right * 250f);
         }
 
         /// <summary>
