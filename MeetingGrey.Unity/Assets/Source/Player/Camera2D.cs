@@ -36,12 +36,6 @@
         private float _halfWorldWidth;
 
         /// <summary>
-        /// The lerp amount.
-        /// </summary>
-        [SerializeField]
-        private float _lerpAmount;
-
-        /// <summary>
         /// The minimum world height.
         /// </summary>
         [SerializeField]
@@ -189,7 +183,9 @@
             this._screenWorldHeight = this._camera.ScreenToWorldPoint(new Vector2(0f, Screen.height)).y - this._camera.ScreenToWorldPoint(Vector2.zero).y;
             this._halfWorldHeight = this._screenWorldHeight / 2f;
 
-            this.Position2D = new Vector2(this._target.position.x, this._deathLine.transform.position.y + this._halfWorldHeight);
+            if (this._target != null && this._deathLine != null) {
+                this.Position2D = new Vector2(this._target.position.x, this._deathLine.transform.position.y + this._halfWorldHeight);
+            }
 
             this.ScreenSizeChanged.SafeInvoke(this, new ScreenSizeChangedEventArgs {
                 WorldHeight = this._screenWorldHeight,
@@ -208,11 +204,11 @@
             if (this._target == null) {
                 var targetObject = GameObject.FindGameObjectWithTag(TagConstants.Player);
 
-                if (targetObject == null) {
-                    Debug.LogError("No game object with tag 'Player' has been defined.");
+                if (targetObject != null) {
+                    this._target = targetObject.transform;
+                } else {
+                    Debug.LogWarning("No game object with tag 'Player' has been defined.");
                 }
-
-                this._target = targetObject.transform;
             }
 
             this.StartCoroutine(this.CheckScreenSizeChanged());
@@ -252,7 +248,9 @@
         /// Late update.
         /// </summary>
         private void LateUpdate() {
-            this.FollowTarget();
+            if (this._target != null) {
+                this.FollowTarget();
+            }
         }
 
         /// <summary>
@@ -268,7 +266,9 @@
         /// Starts this instance.
         /// </summary>
         private void Start() {
-            Level.Instance.Respawned += this.RespawnedEventHandler;
+            if (Level.Instance != null) {
+                Level.Instance.Respawned += this.RespawnedEventHandler;
+            }
         }
     }
 }

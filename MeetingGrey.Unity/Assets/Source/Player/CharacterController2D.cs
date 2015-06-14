@@ -271,7 +271,7 @@
             var x = Input.GetAxis(InputConstants.Horizontal);
 
             if (Mathf.Abs(x) > DeadZone) {
-                var rawInput = Input.GetAxisRaw(InputConstants.Horizontal);
+                var rawInput = Input.GetAxisRaw(InputConstants.Horizontal) > 0f ? 1f : -1f;
                 this.CurrentHorizontalDirection = rawInput;
                 return this._currentHorizontalDirection * this._speed * Time.smoothDeltaTime;
             }

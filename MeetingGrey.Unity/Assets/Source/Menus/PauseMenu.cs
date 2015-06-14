@@ -91,15 +91,23 @@
         /// Updates this instance.
         /// </summary>
         private void Update() {
-            var rawInput = Input.GetAxisRaw(InputConstants.Vertical);
+            if (Mathf.Abs(Input.GetAxis(InputConstants.Vertical)) > 0.15F) {
+                var rawInput = Input.GetAxisRaw(InputConstants.Vertical) > 0f ? 1f : -1f;
 
-            if (Input.GetButtonDown(InputConstants.Pause)) {
-                Level.Instance.Unpause();
-            } else if (rawInput < 0f && rawInput != this._lastFrameVerticalInput) {
-                this.Iterator++;
-            } else if (rawInput > 0f && rawInput != this._lastFrameVerticalInput) {
-                this.Iterator--;
-            } else if (Input.GetButtonDown(InputConstants.Jump) || Input.GetKeyDown(KeyCode.Return)) {
+                if (Input.GetButtonDown(InputConstants.Pause)) {
+                    Level.Instance.Unpause();
+                } else if (rawInput < 0f && rawInput != this._lastFrameVerticalInput) {
+                    this.Iterator++;
+                } else if (rawInput > 0f && rawInput != this._lastFrameVerticalInput) {
+                    this.Iterator--;
+                }
+
+                this._lastFrameVerticalInput = rawInput;
+            } else {
+                this._lastFrameVerticalInput = 0f;
+            }
+
+            if (Input.GetButtonDown(InputConstants.Jump) || Input.GetKeyDown(KeyCode.Return)) {
                 if (this.Iterator == (int)PauseMenuItems.Play) {
                     Level.Instance.Unpause();
                 } else if (this.Iterator == (int)PauseMenuItems.Menu) {
@@ -108,8 +116,6 @@
                     Application.Quit();
                 }
             }
-
-            this._lastFrameVerticalInput = rawInput;
         }
     }
 }
