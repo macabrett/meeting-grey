@@ -342,6 +342,7 @@
                 }
             } else if (lastFrameWasGrounded && this._surfaceBelow != null) {
                 this._surfaceBelow.LeaveSurface();
+                this._surfaceBelow = null;
             }
 
             if (this._verticalVelocity < this._terminalVelocity) {

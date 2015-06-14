@@ -194,6 +194,8 @@
             this._isPlayerDead = true;
             this._deathMessage.SetActive(true);
             this._messages.SetActive(false);
+            AudioWrapper.PlayDeathClip(this.transform.position);
+            AudioWrapper.StopMusic();
         }
 
         /// <summary>
@@ -204,12 +206,14 @@
             this._isPlayerDead = false;
             this._deathMessage.SetActive(false);
             this._messages.SetActive(true);
+            AudioWrapper.StartMusic();
         }
 
         /// <summary>
         /// Starts this instance.
         /// </summary>
         private void Start() {
+            AudioWrapper.StartMusic();
             CharacterController2D.Instance.PlayerDied += this.PlayerDiedEventHandler;
         }
 

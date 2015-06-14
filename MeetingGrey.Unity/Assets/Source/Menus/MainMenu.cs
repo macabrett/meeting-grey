@@ -70,6 +70,7 @@
                     this._iterator = value;
                 }
 
+                AudioWrapper.PlayMenuClip(this.Position2D);
                 this._spriteRenderer.sprite = this._menuSprites[this._iterator];
             }
         }

@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: b91fbf1c5a14b004185897560522657c
-timeCreated: 1434148753
+timeCreated: 1434297707
 licenseType: Free
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
-  executionOrder: {}
+  executionOrder:
+    BrettMStory.Unity.Pixels.PixelSnapper: 100
   isPreloaded: 0
   platformData:
     Any:

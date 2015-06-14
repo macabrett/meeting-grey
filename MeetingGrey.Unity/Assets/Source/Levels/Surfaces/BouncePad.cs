@@ -4,6 +4,7 @@
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
     using MeetingGrey.Unity.Player;
+    using MeetingGrey.Unity.Wrappers;
     using UnityEngine;
 
     /// <summary>
@@ -59,6 +60,7 @@
                 verticalVelocity += BouncePad.JumpBoost;
             }
 
+            AudioWrapper.PlayBounceClip(this.Position2D);
             return verticalVelocity;
         }
 

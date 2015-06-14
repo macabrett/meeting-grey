@@ -3,6 +3,7 @@
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
     using MeetingGrey.Unity.Levels;
+    using MeetingGrey.Unity.Wrappers;
     using UnityEngine;
 
     /// <summary>
@@ -73,6 +74,7 @@
                     this._iterator = value;
                 }
 
+                AudioWrapper.PlayMenuClip(this.Position2D);
                 this._spriteRenderer.sprite = this._menuSprites[this._iterator];
             }
         }

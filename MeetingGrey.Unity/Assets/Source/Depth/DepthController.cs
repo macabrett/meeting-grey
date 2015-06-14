@@ -3,7 +3,9 @@
     using System.Collections;
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
+    using MeetingGrey.Unity.Levels;
     using MeetingGrey.Unity.Player;
+    using MeetingGrey.Unity.Wrappers;
     using UnityEngine;
 
     /// <summary>
@@ -89,6 +91,8 @@
                 this._backgroundParent.transform.position -= this._backgroundOffset;
                 this._foregroundParent.transform.position += this._backgroundOffset;
             }
+
+            AudioWrapper.PlaySwapClip(this.Position2D);
         }
 
         /// <summary>
@@ -146,7 +150,7 @@
         /// Updates this instance.
         /// </summary>
         private void Update() {
-            if (Input.GetButtonDown(InputConstants.Swap)) {
+            if (!Level.Instance.IsPlayerDead && !Level.Instance.IsPaused && Input.GetButtonDown(InputConstants.Swap)) {
                 this.TrySwap();
             }
         }
