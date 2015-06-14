@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 37846f1383a46d149b350ef82e776f6b
-timeCreated: 1434259597
+guid: 48ef9fcd4f8dcae47b144b5b1db70f45
+timeCreated: 1434264865
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PauseMenu_0
-    21300002: PauseMenu_1
-    21300004: PauseMenu_2
+    21300000: MainMenu_0
+    21300002: MainMenu_1
+    21300004: MainMenu_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -40,7 +40,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,33 +52,33 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: PauseMenu_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: PauseMenu_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 64
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: PauseMenu_2
+    - name: MainMenu_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 32
+        width: 16
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: MainMenu_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: MainMenu_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

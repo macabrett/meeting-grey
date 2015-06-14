@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1348d0b2b6fc1bf41b47a32d6132371e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bottomCenter: {fileID: 21300008, guid: 2d0d5ce1c0fed0840a2a238466d632ab, type: 3}
+  _bottomCenter: {fileID: 21300014, guid: 2d0d5ce1c0fed0840a2a238466d632ab, type: 3}
   _bottomLeft: {fileID: 21300008, guid: 2d0d5ce1c0fed0840a2a238466d632ab, type: 3}
   _bottomRight: {fileID: 21300016, guid: 2d0d5ce1c0fed0840a2a238466d632ab, type: 3}
   _debugColor: {r: .882352948, g: .129757807, b: .129757807, a: 1}
@@ -81,7 +81,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _bottomCenter
       value: 
-      objectReference: {fileID: 21300008, guid: 2d0d5ce1c0fed0840a2a238466d632ab,
+      objectReference: {fileID: 21300014, guid: 2d0d5ce1c0fed0840a2a238466d632ab,
         type: 3}
     - target: {fileID: 0}
       propertyPath: _middleRight

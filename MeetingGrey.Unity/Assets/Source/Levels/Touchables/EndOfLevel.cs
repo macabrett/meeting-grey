@@ -3,15 +3,14 @@
     using System.Collections;
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
-    using MeetingGrey.Unity.Levels.Touchables;
     using MeetingGrey.Unity.Player;
     using UnityEngine;
 
     /// <summary>
-    /// A coin.
+    /// The end of a level.
     /// </summary>
     [RequireComponent(typeof(BoxCollider2D))]
-    public class Coin : BaseBehaviour, ITouchable {
+    public class EndOfLevel : BaseBehaviour, ITouchable {
 
         /// <summary>
         /// Touches this instance.
@@ -20,7 +19,7 @@
         public void Touch(CharacterController2D player) {
             if (!this.IsBusy) {
                 this.IsBusy = true;
-                Level.Instance.CoinsGathered++;
+                Level.Instance.EndLevel();
                 this.GameObject.SetActive(false);
             }
         }

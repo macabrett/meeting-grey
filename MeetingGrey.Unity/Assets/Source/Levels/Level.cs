@@ -1,9 +1,11 @@
 ﻿namespace MeetingGrey.Unity.Levels {
 
     using System;
+    using System.Collections;
     using BrettMStory.Events;
     using MeetingGrey.Unity.Constants;
     using MeetingGrey.Unity.Player;
+    using MeetingGrey.Unity.Wrappers;
     using UnityEngine;
 
     /// <summary>
@@ -41,6 +43,12 @@
         /// A value indicating whether or not the player is dead.
         /// </summary>
         private bool _isPlayerDead = false;
+
+        /// <summary>
+        /// The level.
+        /// </summary>
+        [SerializeField]
+        private int _level;
 
         /// <summary>
         /// The pause menu.
@@ -119,10 +127,11 @@
         }
 
         /// <summary>
-        /// Quits this instance.
+        /// Ends the level.
         /// </summary>
-        public void Quit() {
-            Application.Quit();
+        public void EndLevel() {
+            PlayerPrefsWrapper.SaveLevelCompleted(this._level, this._coinsGathered);
+            Application.LoadLevel(SceneConstants.GetLevelName(this._level + 1));
         }
 
         /// <summary>
@@ -145,6 +154,7 @@
         /// Returns to main menu.
         /// </summary>
         public void ReturnToMainMenu() {
+            Application.LoadLevel(SceneConstants.MainMenu);
         }
 
         /// <summary>
@@ -160,6 +170,7 @@
         /// </summary>
         private void Awake() {
             Level._instance = this;
+            PlayerPrefsWrapper.LastLevelPlayed = this._level;
         }
 
         /// <summary>

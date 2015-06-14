@@ -9,7 +9,7 @@
     /// <summary>
     /// A level checkpoint.
     /// </summary>
-    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
     public class Checkpoint : BaseBehaviour, ITouchable {
 
         /// <summary>

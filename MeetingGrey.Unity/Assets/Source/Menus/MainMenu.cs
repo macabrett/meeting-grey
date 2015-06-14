@@ -2,33 +2,30 @@
 
     using BrettMStory.Unity;
     using MeetingGrey.Unity.Constants;
-    using MeetingGrey.Unity.Levels;
+    using MeetingGrey.Unity.Wrappers;
     using UnityEngine;
 
     /// <summary>
-    /// The pause menu.
+    /// The main menu.
     /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
-    public class PauseMenu : BaseBehaviour {
+    public class MainMenu : BaseBehaviour {
 
         /// <summary>
-        /// Pause menu items.
+        /// The main menu items.
         /// </summary>
-        private enum PauseMenuItems {
+        private enum MainMenuItems {
 
             /// <summary>
-            /// The play menu item.
+            /// The continue item.
             /// </summary>
-            Play = 0,
+            Continue = 0,
 
             /// <summary>
-            /// The menu menu item.
+            /// The new game
             /// </summary>
-            Menu = 1,
+            NewGame = 1,
 
-            /// <summary>
-            /// The exit menu item.
-            /// </summary>
             Exit = 2,
         }
 
@@ -82,7 +79,28 @@
         /// </summary>
         private void Awake() {
             this._spriteRenderer = this.GetComponent<SpriteRenderer>();
-            this.GameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Continues the game.
+        /// </summary>
+        private void ContinueGame() {
+            var lastLevelPlayed = PlayerPrefsWrapper.LastLevelPlayed;
+            Application.LoadLevel(SceneConstants.GetLevelName(lastLevelPlayed));
+        }
+
+        /// <summary>
+        /// Quits the game.
+        /// </summary>
+        private void QuitGame() {
+            Application.Quit();
+        }
+
+        /// <summary>
+        /// Starts a new game.
+        /// </summary>
+        private void StartNewGame() {
+            Application.LoadLevel(SceneConstants.GetLevelName(0));
         }
 
         /// <summary>
@@ -91,19 +109,17 @@
         private void Update() {
             var rawInput = Input.GetAxisRaw(InputConstants.Vertical);
 
-            if (Input.GetButtonDown(InputConstants.Pause)) {
-                Level.Instance.Unpause();
-            } else if (rawInput < 0f && rawInput != this._lastFrameVerticalInput) {
+            if (rawInput < 0f && rawInput != this._lastFrameVerticalInput) {
                 this.Iterator++;
             } else if (rawInput > 0f && rawInput != this._lastFrameVerticalInput) {
                 this.Iterator--;
             } else if (Input.GetButtonDown(InputConstants.Jump) || Input.GetKeyDown(KeyCode.Return)) {
-                if (this.Iterator == (int)PauseMenuItems.Play) {
-                    Level.Instance.Unpause();
-                } else if (this.Iterator == (int)PauseMenuItems.Menu) {
-                    Application.LoadLevel(SceneConstants.MainMenu);
+                if (this.Iterator == (int)MainMenuItems.Continue) {
+                    this.ContinueGame();
+                } else if (this.Iterator == (int)MainMenuItems.NewGame) {
+                    this.StartNewGame();
                 } else {
-                    Application.Quit();
+                    this.QuitGame();
                 }
             }
 
