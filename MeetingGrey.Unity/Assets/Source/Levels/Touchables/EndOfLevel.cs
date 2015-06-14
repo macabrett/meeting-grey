@@ -20,7 +20,6 @@
             if (!this.IsBusy && Level.Instance.CoinsGathered >= 3) {
                 this.IsBusy = true;
                 Level.Instance.EndLevel();
-                this.GameObject.SetActive(false);
             }
         }
 
